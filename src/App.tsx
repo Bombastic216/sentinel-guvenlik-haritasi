@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 
-// ── Icons (inline SVG components) ──────────────────────────────────────────
+// ── İkonlar (inline SVG bileşenleri) ────────────────────────────────────────
 const ShieldIcon = ({ size = 16, className = "" }) => (
   <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -79,7 +79,7 @@ const SettingsIcon = ({ size = 16 }) => (
   </svg>
 );
 
-// ── Data ────────────────────────────────────────────────────────────────────
+// ── Veri ────────────────────────────────────────────────────────────────────
 const LAYER_ICONS: Record<string, React.FC<{ size?: number }>> = {
   crime: AlertIcon,
   lighting: LightIcon,
@@ -105,9 +105,8 @@ const cities = [
   { id: "bursa", name: "Bursa", lat: 40.183, lng: 29.066, population: "3.1M", riskScore: 35 },
 ];
 
-// ── Map (SVG placeholder with animated nodes) ───────────────────────────────
+// ── Harita (SVG animasyonlu noktalar) ───────────────────────────────────────
 const MapPlaceholder = ({ layers, radiusMode, radiusKm }: { layers: typeof defaultLayers; radiusMode: boolean; radiusKm: number }) => {
-  const activeColors = layers.filter(l => l.enabled).map(l => l.color);
   const points = [
     { x: 52, y: 38, layer: "crime", pulse: true },
     { x: 61, y: 42, layer: "crime", pulse: false },
@@ -182,7 +181,7 @@ const MapPlaceholder = ({ layers, radiusMode, radiusKm }: { layers: typeof defau
       ))}
       <div style={{ position: "absolute", bottom: 24, right: 24, width: 48, height: 48, borderRadius: "50%", border: "1px solid #1e3a5f", background: "rgba(10,15,26,0.8)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: "#475569", fontFamily: "monospace" }}>
         <div style={{ textAlign: "center", lineHeight: 1.2 }}>
-          <div style={{ color: "#ef4444", fontWeight: "bold" }}>N</div>
+          <div style={{ color: "#ef4444", fontWeight: "bold" }}>K</div>
           <div style={{ fontSize: 8 }}>↑</div>
         </div>
       </div>
@@ -198,7 +197,7 @@ const MapPlaceholder = ({ layers, radiusMode, radiusKm }: { layers: typeof defau
   );
 };
 
-// ── Layer Toggle ─────────────────────────────────────────────────────────────
+// ── Katman Toggle ────────────────────────────────────────────────────────────
 const LayerItem = ({ layer, onToggle }: { layer: typeof defaultLayers[0]; onToggle: (id: string) => void }) => {
   const Icon = LAYER_ICONS[layer.id] || LayersIcon;
   const riskColors: Record<string, string> = { yüksek: "#ef4444", orta: "#eab308", düşük: "#22c55e" };
@@ -225,7 +224,7 @@ const LayerItem = ({ layer, onToggle }: { layer: typeof defaultLayers[0]; onTogg
   );
 };
 
-// ── Stats Bar ────────────────────────────────────────────────────────────────
+// ── İstatistik Çubuğu ────────────────────────────────────────────────────────
 const StatsBar = ({ layers, city }: { layers: typeof defaultLayers; city: typeof cities[0] | null }) => {
   const activeLayers = layers.filter(l => l.enabled);
   const highRisk = activeLayers.filter(l => l.risk === "yüksek").length;
@@ -247,7 +246,7 @@ const StatsBar = ({ layers, city }: { layers: typeof defaultLayers; city: typeof
   );
 };
 
-// ── Radius Panel ─────────────────────────────────────────────────────────────
+// ── Yarıçap Paneli ───────────────────────────────────────────────────────────
 const RadiusPanel = ({ radiusKm, setRadiusKm, onClose }: { radiusKm: number; setRadiusKm: (v: number) => void; onClose: () => void }) => (
   <div style={{ position: "absolute", bottom: 80, right: 16, width: 220, background: "#0d1520", border: "1px solid #1e3a5f", borderRadius: 10, padding: 16, zIndex: 20, boxShadow: "0 8px 32px rgba(0,0,0,0.6)" }}>
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
@@ -267,13 +266,13 @@ const RadiusPanel = ({ radiusKm, setRadiusKm, onClose }: { radiusKm: number; set
     </div>
     <div style={{ background: "#091018", borderRadius: 6, padding: 10, border: "1px solid #1e293b", fontSize: 10, fontFamily: "monospace", color: "#64748b", lineHeight: 1.8 }}>
       <div>Alan: <span style={{ color: "#93c5fd" }}>{(Math.PI * radiusKm * radiusKm).toFixed(0)} km²</span></div>
-      <div>Tahm. Nüfus: <span style={{ color: "#93c5fd" }}>{Math.round(radiusKm * radiusKm * 8500).toLocaleString("tr-TR")}</span></div>
+      <div>Tahmini Nüfus: <span style={{ color: "#93c5fd" }}>{Math.round(radiusKm * radiusKm * 8500).toLocaleString("tr-TR")}</span></div>
       <div>Kamera Kapsamı: <span style={{ color: "#22c55e" }}>%{Math.min(95, 40 + radiusKm * 2)}</span></div>
     </div>
   </div>
 );
 
-// ── City Selector ─────────────────────────────────────────────────────────────
+// ── Şehir Seçici ─────────────────────────────────────────────────────────────
 const CitySelector = ({ cities: cityList, selected, onSelect }: { cities: typeof cities; selected: typeof cities[0] | null; onSelect: (c: typeof cities[0]) => void }) => (
   <div style={{ padding: "10px 0" }}>
     {cityList.map(city => {
@@ -289,7 +288,7 @@ const CitySelector = ({ cities: cityList, selected, onSelect }: { cities: typeof
           <MapPinIcon size={12} />
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 12, fontWeight: 600, color: isSelected ? "#93c5fd" : "#94a3b8", fontFamily: "monospace" }}>{city.name}</div>
-            <div style={{ fontSize: 9, color: "#334155", fontFamily: "monospace" }}>Nüf: {city.population}</div>
+            <div style={{ fontSize: 9, color: "#334155", fontFamily: "monospace" }}>Nüfus: {city.population}</div>
           </div>
           <div style={{ fontSize: 10, fontWeight: 700, color: riskColor, fontFamily: "monospace" }}>{city.riskScore}</div>
         </div>
@@ -298,7 +297,7 @@ const CitySelector = ({ cities: cityList, selected, onSelect }: { cities: typeof
   </div>
 );
 
-// ── Main App ─────────────────────────────────────────────────────────────────
+// ── Ana Uygulama ─────────────────────────────────────────────────────────────
 export default function SentinelApp() {
   const [layers, setLayers] = useState(defaultLayers);
   const [selectedCity, setSelectedCity] = useState(cities[0]);
@@ -325,7 +324,7 @@ export default function SentinelApp() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", width: "100%", background: "#060b14", color: "#e2e8f0", fontFamily: "'JetBrains Mono', 'Courier New', monospace", overflow: "hidden" }}>
-      {/* ── Top Bar ── */}
+      {/* ── Üst Çubuk ── */}
       <header style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 16px", height: 48, background: "#080d17", borderBottom: "1px solid #1e293b", flexShrink: 0, zIndex: 10 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{ background: "none", border: "none", color: "#475569", cursor: "pointer", padding: 4 }}>
@@ -336,7 +335,7 @@ export default function SentinelApp() {
               <ShieldIcon size={14} className="" style={{ color: "#3b82f6" }} />
             </div>
             <div>
-              <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: 3, color: "#e2e8f0" }}>SENTINEL</div>
+              <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: 3, color: "#e2e8f0" }}>SENTİNEL</div>
               <div style={{ fontSize: 8, color: "#334155", letterSpacing: 2 }}>Mekânsal Zeka</div>
             </div>
           </div>
@@ -368,9 +367,9 @@ export default function SentinelApp() {
         </div>
       </header>
 
-      {/* ── Body ── */}
+      {/* ── İçerik ── */}
       <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
-        {/* ── Sidebar ── */}
+        {/* ── Kenar Çubuğu ── */}
         {sidebarOpen && (
           <aside style={{ width: 280, background: "#080d17", borderRight: "1px solid #1e293b", display: "flex", flexDirection: "column", flexShrink: 0, overflow: "hidden" }}>
             <div style={{ display: "flex", borderBottom: "1px solid #1e293b", flexShrink: 0 }}>
@@ -434,12 +433,12 @@ export default function SentinelApp() {
               )}
             </div>
             <div style={{ padding: "10px 12px", borderTop: "1px solid #1e293b", fontSize: 9, color: "#1e3a5f", fontFamily: "monospace", letterSpacing: 1, flexShrink: 0 }}>
-              SENTINEL v2.1.0 · BETA · İBB VERİ ENTEGRASYONU
+              SENTİNEL v2.1.0 · BETA · İBB VERİ ENTEGRASYONU
             </div>
           </aside>
         )}
 
-        {/* ── Map Area ── */}
+        {/* ── Harita Alanı ── */}
         <main style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", position: "relative" }}>
           <div style={{ flex: 1, position: "relative" }}>
             <MapPlaceholder layers={layers} radiusMode={radiusMode} radiusKm={radiusKm} />
